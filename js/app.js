@@ -5,15 +5,16 @@ var Enemy = function(x, y, min, max) {
 	this.x = -101;
 	this.y = Math.ceil(Math.random() * 5) * 83 - 83 * 0.3;
 	this.speed = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log(this.speed);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
-    this.value = Math.floor(Math.random() * ((0-2)+1) + 2);
+    this.value = Math.floor(Math.random() * ((0-3)+1) + 2);
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = this.path + this.value + '.png';
+    this.sprite = this.path + this.image[this.value];
 };
 
 
@@ -29,12 +30,12 @@ Enemy.prototype.update = function(dt, player) {
     // all computers.
 };
 
-Enemy.prototype.reset = function getRandomIntInclusive(min, max) {
-    this.x = Math.floor(Math.random() * (max - min + 1)) + min;
-    speed = Math.floor(Math.random() * (max - min + 1)) + min;
-    return speed;
+// Enemy.prototype.reset = function getRandomIntInclusive(min, max) {
+//     this.x = Math.floor(Math.random() * (max - min + 1)) + min;
+//     speed = Math.floor(Math.random() * (max - min + 1)) + min;
+//     return speed;
      
-};
+// };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
