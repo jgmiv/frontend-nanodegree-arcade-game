@@ -1,10 +1,10 @@
 // Enemies our player must avoid
 var Enemy = function(x, y, min, max) {
-    this.width = 101
-    this.height = 101
+    this.width = 83
+    this.height = 83
 	this.x = x;
-	this.y = Math.ceil(Math.random() * 4) * 83 - 83 * 0.3;
-    // console.log(this.y);
+	this.y = Math.ceil(Math.random() * 3) * 83 - 83 * 0.3;
+    console.log(this.y);
 	this.speed = Math.floor(Math.random() * (max - min + 1)) + min;
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
@@ -31,7 +31,7 @@ Enemy.prototype.update = function(dt, player) {
     // all computers.
 };
 
-Enemy.prototype.reset = function (min, max) {
+Enemy.prototype.reset = function (x, y, min, max) {
     this.x = Math.floor(Math.random() * (max - min + 1)) + min;
     speed = Math.floor(Math.random() * (max - min + 1)) + min;
     return speed;
@@ -44,10 +44,10 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var enemy1 = new Enemy (-75, 30, 50, 100);
-var enemy2 = new Enemy (-75, 40, 50, 100);
-var enemy3 = new Enemy (-75, 10, 50, 100);
-var enemy4 = new Enemy (-75, 20, 50, 100);
+var enemy1 = new Enemy (0, 200, 50, 300);
+var enemy2 = new Enemy (0, 200, 50, 300);
+var enemy3 = new Enemy (0, 200, 50, 300);
+var enemy4 = new Enemy (0, 200, 50, 300);
 
 var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 
@@ -64,7 +64,7 @@ var Player = function(x, y, speed) {
 };
 
 Player.prototype.update = function() {
-    // this.x = this.x + (this.speed * dt);
+    this.x = this.x + (this.speed * dt);
     if (this.y < 50) {
         this.reset();
     }
