@@ -2,10 +2,10 @@
 var Enemy = function(x, y, min, max) {
     this.width = 101
     this.height = 101
-	this.x = -101;
-	this.y = Math.ceil(Math.random() * 5) * 83 - 83 * 0.3;
+	this.x = x;
+	this.y = Math.ceil(Math.random() * 4) * 83 - 83 * 0.3;
+    // console.log(this.y);
 	this.speed = Math.floor(Math.random() * (max - min + 1)) + min;
-    console.log(this.speed);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
     this.value = Math.floor(Math.random() * ((0-3)+1) + 2);
@@ -15,6 +15,7 @@ var Enemy = function(x, y, min, max) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = this.path + this.image[this.value];
+
 };
 
 
@@ -30,24 +31,25 @@ Enemy.prototype.update = function(dt, player) {
     // all computers.
 };
 
-// Enemy.prototype.reset = function getRandomIntInclusive(min, max) {
-//     this.x = Math.floor(Math.random() * (max - min + 1)) + min;
-//     speed = Math.floor(Math.random() * (max - min + 1)) + min;
-//     return speed;
+Enemy.prototype.reset = function (min, max) {
+    this.x = Math.floor(Math.random() * (max - min + 1)) + min;
+    speed = Math.floor(Math.random() * (max - min + 1)) + min;
+    return speed;
+    console.log(speed);
      
-// };
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var copia1 = new Enemy (50, 300);
-var copia2 = new Enemy (50, 300);
-var copia3 = new Enemy (50, 300);
-var copia4 = new Enemy (50, 300);
+var enemy1 = new Enemy (-75, 30, 50, 100);
+var enemy2 = new Enemy (-75, 40, 50, 100);
+var enemy3 = new Enemy (-75, 10, 50, 100);
+var enemy4 = new Enemy (-75, 20, 50, 100);
 
-var allEnemies = [copia1, copia2, copia3, copia4];
+var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 
 
 // Now write your own player class
