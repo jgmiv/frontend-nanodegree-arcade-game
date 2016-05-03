@@ -1,11 +1,10 @@
 // Enemies our player must avoid
-var Enemy = function(x, y, min, max) {
-    this.width = 83
-    this.height = 83
-	this.x = x;
-	this.y = Math.ceil(Math.random() * 3) * 83 - 83 * 0.3;
-    console.log(this.y);
-	this.speed = Math.floor(Math.random() * (max - min + 1)) + min;
+var Enemy = function() {
+    this.col = -2;
+    this.row = getRandomIntInclusive(1, 3);
+	this.x = 101 * this.col;
+	this.y = 101 * this.row;
+	this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
     this.value = Math.floor(Math.random() * ((0-3)+1) + 2);
@@ -21,9 +20,14 @@ var Enemy = function(x, y, min, max) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt, player) {
-	this.x = this.x + (this.speed * dt);
+Enemy.prototype.update = function(dt) {
+	this.x = this.x + this.speed;
+    this.y = 83 * this.row;
     if (this.x > 505) {
+        this.reset();
+    }
+    if (player.row === this.row && this.x + 101 > player.x) {
+        player.reset();
         this.reset();
     }
     // You should multiply any movement by the dt parameter
@@ -31,11 +35,13 @@ Enemy.prototype.update = function(dt, player) {
     // all computers.
 };
 
-Enemy.prototype.reset = function (x, y, min, max) {
-    this.x = Math.floor(Math.random() * (max - min + 1)) + min;
-    speed = Math.floor(Math.random() * (max - min + 1)) + min;
-    return speed;
-    console.log(speed);
+Enemy.prototype.reset = function () {
+    this.x = getRandomIntInclusive(1, 3);
+    this.speed = getRandomIntInclusive(1, 6);
+    this.path = 'images/enemies/';
+    this.image = ['enemy-copia.png', 'enemy-bug.png'];
+    this.value = Math.floor(Math.random() * ((0-3)+1) + 2);
+    this.sprite = this.path + this.image[this.value];
      
 };
 
@@ -44,35 +50,53 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var enemy1 = new Enemy (0, 200, 50, 300);
-var enemy2 = new Enemy (0, 200, 50, 300);
-var enemy3 = new Enemy (0, 200, 50, 300);
-var enemy4 = new Enemy (0, 200, 50, 300);
+// var enemy1 = new Enemy ();
+// var enemy2 = new Enemy ();
+// var enemy3 = new Enemy ();
+// var enemy4 = new Enemy ();
 
-var allEnemies = [enemy1, enemy2, enemy3, enemy4];
+var allEnemies = [];{
+	for (var i = 0; i < 4; i++)
+		allEnemies.push(new Enemy());
+}
 
+function getRandomIntInclusive(min, max) {
+    return Math.round(Math.floor(Math.random() * (max - min + 1)) + min);
+}
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(x, y, speed) {
-	this.x = x;
-	this.y = y;
-	this.move = speed;
+var Player = function() {
+    this.col = 2;
+    this.row = 5;
+    this.x = 101 * this.col;
+    this.y = 83 * this.row;
+	this.move = true;
     this.sprite = 'images/char-boy.png';
     
 };
 
 Player.prototype.update = function() {
-    this.x = this.x + (this.speed * dt);
-    if (this.y < 50) {
-        this.reset();
+    if (this.moveable) {
+    this.x = 101 * this.col;
+    this.y = 83 * this.row;
+
     }
+    if (this.y < 83 && this.moveable) {
+        this.moveable = false;
+        return true;
+    }
+    // if (this.y < 50) {
+    //     this.reset();
+    // }
 };
 
 
 Player.prototype.reset = function() {
-
+  	this.col = 3;
+    this.row = 5;
+    this.moveable = true;
 
 };
 
@@ -80,11 +104,33 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var player = new Player(200, 350,  70);
+var player = new Player();
 
 // Place the player object in a variable called player
 
+Player.prototype.handleInput = function(key) {
 
+	switch (key) {
+
+        case "left" : this.col--;
+        break;
+
+        case "right" : this.col++;
+        break;
+
+        case "up" : this.row--;
+        break;
+        
+        case "down" : this.row++;
+        break;
+    }
+    if (this.col < 0) this.col = 0;
+    if (this.col > 4) this.col = 4;
+    if (this.row > 5) this.row = 5;
+    //Player wins the game reset
+    if (this.row < 0) this.reset();
+
+};
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -97,31 +143,5 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-
-    // switch (input) {
-    //   case 'up':
-    //     if (this.y > 0){
-    //         this.y -= 83px;
-    //     }
-    //     break;
-
-    //   case 'down':
-    //     if (this.y < 505) {
-    //         this.y += 83px;
-    //     }
-    //     break;
-
-    //   case 'right': 
-    //     if (this.x > 0) {
-    //         this.x -= 101px;
-    //     } 
-    //     break;
-
-    //   case 'left':
-    //     if (this.x < 505) {
-    //         this.x += 101px;
-    //     }
-    //     break;
-
-    // };
+   
 });
