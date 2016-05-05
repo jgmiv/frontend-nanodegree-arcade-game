@@ -1,8 +1,10 @@
 // Enemies our player must avoid
 var Enemy = function() {
+    this.height = 83
+    this.width = 83
     this.col = -2;
     this.row = getRandomIntInclusive(1, 3);
-	this.x = 101 * this.col;
+	this.x = 83 * this.col;
 	this.y = 101 * this.row;
 	this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
@@ -26,7 +28,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505) {
         this.reset();
     }
-    if (player.row === this.row && this.x + 101 > player.x) {
+    if (player.row === this.row && this.x > player.x) {
         player.reset();
         this.reset();
     }
@@ -94,7 +96,7 @@ Player.prototype.update = function() {
 
 
 Player.prototype.reset = function() {
-  	this.col = 3;
+  	this.col = 2;
     this.row = 5;
     this.moveable = true;
 

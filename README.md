@@ -1,6 +1,10 @@
-frontend-nanodegree-arcade-game
-===============================
+**Classic Arcade Game - *Frogger* **
 
-Students should use this [rubric](https://www.udacity.com/course/viewer/#!/c-nd001/l-2696458597/m-2687128535) for self-checking their submission.
+**Goal** 
+* Move hero through the enemies to get to the water.  The grassy areas are safe zones so use them to conquer the map. 
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+**How To**
+* To play this recreation of the classic arcade game, *Frogger*, arrow keys will be used for up, down, left and right movement.
+
+**More on 2d Canvas Games**
+* Visit [JLongster](https://github.com/jlongster/canvas-game-bootstrap).  This is a great tutorial for getting started.  Although, this game is much different than the one created here.
