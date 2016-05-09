@@ -1,7 +1,7 @@
 // Enemies our player must avoid
 var Enemy = function() {
-    this.height = 83
-    this.width = 83
+    this.height = 101;
+    this.width = 83;
     this.col = -2;
     this.row = getRandomIntInclusive(1, 3);
 	this.x = 83 * this.col;
@@ -52,10 +52,6 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// var enemy1 = new Enemy ();
-// var enemy2 = new Enemy ();
-// var enemy3 = new Enemy ();
-// var enemy4 = new Enemy ();
 
 var allEnemies = [];{
 	for (var i = 0; i < 4; i++)
@@ -89,9 +85,7 @@ Player.prototype.update = function() {
         this.moveable = false;
         return true;
     }
-    // if (this.y < 50) {
-    //     this.reset();
-    // }
+   
 };
 
 
@@ -126,9 +120,9 @@ Player.prototype.handleInput = function(key) {
         case "down" : this.row++;
         break;
     }
-    if (this.col < 0) this.col = 0;
-    if (this.col > 4) this.col = 4;
-    if (this.row > 5) this.row = 5;
+    // if (this.col < 0) this.col = 0;
+    // if (this.col > 4) this.col = 4;
+    // if (this.row > 5) this.row = 5;
     //Player wins the game reset
     if (this.row < 0) this.reset();
 

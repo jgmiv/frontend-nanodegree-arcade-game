@@ -4,6 +4,7 @@
 * Move hero through the enemies to get to the water.  The grassy areas are safe zones so use them to conquer the map. 
 
 **How To**
+* First open ```index.html``` in you browser.
 * To play this recreation of the classic arcade game, *Frogger*, arrow keys will be used for up, down, left and right movement.
 
 **More on 2d Canvas Games**
