@@ -24,7 +24,7 @@ var Enemy = function() {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
 	this.x = this.x + this.speed;
-    this.y = 83 * this.row;
+    this.y = 101 * this.row;
     if (this.x > 505) {
         this.reset();
     }
@@ -120,9 +120,9 @@ Player.prototype.handleInput = function(key) {
         case "down" : this.row++;
         break;
     }
-    // if (this.col < 0) this.col = 0;
-    // if (this.col > 4) this.col = 4;
-    // if (this.row > 5) this.row = 5;
+    if (this.col < 0) this.col = 0;
+    if (this.col > 4) this.col = 4;
+    if (this.row > 5) this.row = 5;
     //Player wins the game reset
     if (this.row < 0) this.reset();
 
