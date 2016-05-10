@@ -38,7 +38,9 @@ Enemy.prototype.update = function(dt) {
 };
 
 Enemy.prototype.reset = function () {
-    this.x = getRandomIntInclusive(1, 3);
+    this.row = getRandomIntInclusive(1, 3);
+    this.x = 83 * this.col
+    this.y = 101 * this.row
     this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
