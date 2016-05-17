@@ -1,11 +1,14 @@
 // Enemies our player must avoid
+var Character = function () {
+    this.height = 90;
+    this.width = 101;
+}
+
 var Enemy = function() {
-    this.height = 101;
-    this.width = 83;
     this.col = -2;
-    this.row = getRandomIntInclusive(1, 3);
-	this.x = 83 * this.col;
-	this.y = 101 * this.row;
+    this.row = getRandomIntInclusive(2, 3);
+	this.x = 101 * this.col;
+	this.y = 90 * this.row;
 	this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
@@ -24,11 +27,11 @@ var Enemy = function() {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
 	this.x = this.x + this.speed;
-    this.y = 101 * this.row;
+    this.y = (90 * this.row) - (90/2);
     if (this.x > 505) {
         this.reset();
     }
-    if (player.row === this.row && this.x > player.x) {
+    if (player.row === this.row && (player.x >= this.x && player.x <= (this.x + 101))) {
         player.reset();
         this.reset();
     }
@@ -38,9 +41,9 @@ Enemy.prototype.update = function(dt) {
 };
 
 Enemy.prototype.reset = function () {
-    this.row = getRandomIntInclusive(1, 3);
-    this.x = 83 * this.col
-    this.y = 101 * this.row
+    this.row = getRandomIntInclusive(2, 3);
+    this.x = 101 * this.col;
+    this.y = (90 * this.row) - (90/2);
     this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
@@ -71,7 +74,7 @@ var Player = function() {
     this.col = 2;
     this.row = 5;
     this.x = 101 * this.col;
-    this.y = 83 * this.row;
+    this.y = 75 * this.row;
 	this.move = true;
     this.sprite = 'images/char-boy.png';
     
@@ -80,10 +83,10 @@ var Player = function() {
 Player.prototype.update = function() {
     if (this.moveable) {
     this.x = 101 * this.col;
-    this.y = 83 * this.row;
+    this.y = 75 * this.row;
 
     }
-    if (this.y < 83 && this.moveable) {
+    if (this.y < 75 && this.moveable) {
         this.moveable = false;
         return true;
     }
