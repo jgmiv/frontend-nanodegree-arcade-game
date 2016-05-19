@@ -1,6 +1,10 @@
 // Enemies our player must avoid
 var Tile_Width = 101;
-	Tile_Height = 90;
+	Tile_Height = 75;
+
+function getRandomIntInclusive(min, max) {
+    return Math.round(Math.floor(Math.random() * (max - min + 1)) + min);
+}    
 
 var Character = function ()  {
     this.x = Tile_Width * this.col;
@@ -8,27 +12,26 @@ var Character = function ()  {
 }
 
 Character.prototype.render = function () {
-
+    Character.call(this);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
 
 }
 
 var Enemy = function () {
-	new Character();
+	Character.call(this);
     this.col = -2;
     this.row = getRandomIntInclusive(2, 3);
 	this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
     this.image = ['enemy-copia.png', 'enemy-bug.png'];
     this.value = Math.floor(Math.random() * ((0-3)+1) + 2);
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = this.path + this.image[this.value];
 
 };
+
+
+Enemy.prototype = Object.create (Character.prototype);
+Enemy.prototype.constructor = Enemy;
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -42,14 +45,12 @@ Enemy.prototype.update = function(dt) {
         player.reset();
         this.reset();
     }
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+
 };
 
 Enemy.prototype.reset = function () {
     this.row = getRandomIntInclusive(2, 3);
-    this.x = 101 * this.col;
+    this.x = Tile_Height * this.col;
     this.y = (Tile_Height * this.row) - (Tile_Height/2);
     this.speed = getRandomIntInclusive(1, 6);
     this.path = 'images/enemies/';
@@ -59,30 +60,18 @@ Enemy.prototype.reset = function () {
      
 };
 
-// Draw the enemy on the screen, required method for game
-// Enemy.prototype.render = function() {
-//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// };
-
-
-Enemy.prototype = new Character();
-
-Enemy.prototype.constructor = Enemy;
-
 var allEnemies = [];{
-	for (var i = 0; i < 4; i++)
-		allEnemies.push(new Enemy());
+    for (var i = 0; i < 4; i++)
+        allEnemies.push(new Enemy());
 }
 
-function getRandomIntInclusive(min, max) {
-    return Math.round(Math.floor(Math.random() * (max - min + 1)) + min);
-}
+// Draw the enemy on the screen, required method for game
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    var obj = Character();
+    Character.call(this);
     this.col = 2;
     this.row = 5;
 	this.move = true;
@@ -90,13 +79,16 @@ var Player = function() {
     
 };
 
+Player.prototype = Object.create (Character.prototype);
+Player.prototype.constructor = Player;
+
 Player.prototype.update = function() {
     if (this.moveable) {
-    this.x = 101 * this.col;
-    this.y = 75 * this.row;
+    this.x = Tile_Width * this.col;
+    this.y = Tile_Height * this.row;
 
     }
-    if (this.y < 75 && this.moveable) {
+    if (this.y < Tile_Height && this.moveable) {
         this.moveable = false;
         return true;
     }
@@ -111,9 +103,10 @@ Player.prototype.reset = function() {
 
 };
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+// Player.prototype.render = function() {
+//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+// };
+
 
 var player = new Player();
 
