@@ -1,23 +1,22 @@
 // Enemies our player must avoid
 var Tile_Width = 101;
-	Tile_Height = 75;
-
-function getRandomIntInclusive(min, max) {
-    return Math.round(Math.floor(Math.random() * (max - min + 1)) + min);
-}    
+	Tile_Height = 75;  
 
 var Character = function ()  {
+
     this.x = Tile_Width * this.col;
     this.y = Tile_Height * this.row;
-}
+
+};
 
 Character.prototype.render = function () {
     Character.call(this);
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
-}
+};
 
 var Enemy = function () {
+
 	Character.call(this);
     this.col = -2;
     this.row = getRandomIntInclusive(2, 3);
@@ -30,12 +29,13 @@ var Enemy = function () {
 };
 
 
-Enemy.prototype = Object.create (Character.prototype);
+Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+
 	this.x = this.x + this.speed;
     this.y = (Tile_Height * this.row) - (Tile_Height/2);
     if (this.x > 505) {
@@ -49,6 +49,7 @@ Enemy.prototype.update = function(dt) {
 };
 
 Enemy.prototype.reset = function () {
+
     this.row = getRandomIntInclusive(2, 3);
     this.x = Tile_Height * this.col;
     this.y = (Tile_Height * this.row) - (Tile_Height/2);
@@ -60,8 +61,8 @@ Enemy.prototype.reset = function () {
      
 };
 
-var allEnemies = [];{
-    for (var i = 0; i < 4; i++)
+var allEnemies = []; 
+    for (var i = 0; i < 4; i++) {
         allEnemies.push(new Enemy());
 }
 
@@ -71,6 +72,7 @@ var allEnemies = [];{
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
+
     Character.call(this);
     this.col = 2;
     this.row = 5;
@@ -83,6 +85,7 @@ Player.prototype = Object.create (Character.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+
     if (this.moveable) {
     this.x = Tile_Width * this.col;
     this.y = Tile_Height * this.row;
@@ -97,6 +100,7 @@ Player.prototype.update = function() {
 
 
 Player.prototype.reset = function() {
+
   	this.col = 2;
     this.row = 5;
     this.moveable = true;
@@ -127,12 +131,23 @@ Player.prototype.handleInput = function(key) {
         
         case "down" : this.row++;
         break;
+
+        default: throw new RuntimeException("myVar invalid " + myVar);
+    };
+
+    if (this.col < 0) {
+        this.col = 0
     }
-    if (this.col < 0) this.col = 0;
-    if (this.col > 4) this.col = 4;
-    if (this.row > 5) this.row = 5;
+    if (this.col > 4) {
+        this.col = 4
+    }
+    if (this.row > 5) {
+        this.row = 5
+    }
     //Player wins the game reset
-    if (this.row < 0) this.reset();
+    if (this.row < 0) {
+        this.reset()
+    }
 
 };
 
@@ -150,3 +165,6 @@ document.addEventListener('keyup', function(e) {
    
 });
 
+function getRandomIntInclusive(min, max) {
+    return Math.round(Math.floor(Math.random() * (max - min + 1)) + min);
+}
